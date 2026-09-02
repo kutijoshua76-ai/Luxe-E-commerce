@@ -113,10 +113,6 @@
             text-transform: uppercase; transition: color 0.3s ease;
             position: relative;
         }
-        /* Strong override for mobile drawer – must sit OUTSIDE media query to beat global specificity */
-        #main-nav.active a:not(.nav-cart) {
-            color: #ffffff !important;
-        }
         nav a::after {
             content: ''; position: absolute; bottom: -4px; left: 0;
             width: 0; height: 1px;
@@ -571,11 +567,41 @@
         const backdrop = document.getElementById('nav-backdrop');
         const closeBtn = document.getElementById('nav-drawer-close');
 
+        // Drawer link style helper – inline styles beat ALL CSS rules
+        function applyDrawerLinkStyles() {
+            nav.querySelectorAll('a:not(.nav-cart)').forEach(function(a) {
+                a.style.setProperty('color', '#ffffff', 'important');
+                a.style.setProperty('background', 'rgba(255,255,255,0.10)', 'important');
+                a.style.setProperty('border', '1px solid rgba(255,255,255,0.20)', 'important');
+                a.style.setProperty('border-radius', '12px', 'important');
+                a.style.setProperty('padding', '0.9rem 1.2rem', 'important');
+                a.style.setProperty('display', 'block', 'important');
+                a.style.setProperty('font-size', '1.15rem', 'important');
+                a.style.setProperty('font-weight', '700', 'important');
+                a.style.setProperty('text-shadow', '0 1px 6px rgba(0,0,0,0.6)', 'important');
+            });
+        }
+
+        function removeDrawerLinkStyles() {
+            nav.querySelectorAll('a:not(.nav-cart)').forEach(function(a) {
+                a.style.removeProperty('color');
+                a.style.removeProperty('background');
+                a.style.removeProperty('border');
+                a.style.removeProperty('border-radius');
+                a.style.removeProperty('padding');
+                a.style.removeProperty('display');
+                a.style.removeProperty('font-size');
+                a.style.removeProperty('font-weight');
+                a.style.removeProperty('text-shadow');
+            });
+        }
+
         function openNav() {
             toggle.classList.add('active');
             nav.classList.add('active');
             if (backdrop) backdrop.classList.add('active');
             document.body.style.overflow = 'hidden';
+            applyDrawerLinkStyles();
         }
 
         function closeNav() {
@@ -583,6 +609,7 @@
             nav.classList.remove('active');
             if (backdrop) backdrop.classList.remove('active');
             document.body.style.overflow = 'auto';
+            removeDrawerLinkStyles();
         }
 
         if (toggle) {
