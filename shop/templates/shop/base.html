@@ -307,19 +307,19 @@
                 right: -100%;
                 width: min(85vw, 360px);
                 height: 100vh;
-                background: rgba(8, 12, 32, 0.98);
+                background: linear-gradient(180deg, #101535 0%, #080b1e 100%);
                 -webkit-backdrop-filter: blur(25px);
                 backdrop-filter: blur(25px);
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: stretch;
-                gap: 1rem;
-                padding: 1.5rem 1.5rem 2rem;
+                gap: 0.75rem;
+                padding: 1.75rem 1.5rem 2.5rem;
                 transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-                border-left: 1px solid var(--glass-border);
+                border-left: 1px solid rgba(168, 85, 247, 0.3);
                 z-index: 1200;
                 overflow-y: auto;
-                box-shadow: -10px 0 35px rgba(0, 0, 0, 0.7);
+                box-shadow: -15px 0 45px rgba(0, 0, 0, 0.85);
             }
             nav.active {
                 right: 0;
@@ -328,35 +328,54 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding-bottom: 1rem;
-                border-bottom: 1px solid var(--glass-border);
-                margin-bottom: 0.5rem;
+                padding-bottom: 1.25rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                margin-bottom: 0.75rem;
             }
             .nav-drawer-title {
-                font-size: 0.8rem;
+                font-size: 0.95rem;
                 letter-spacing: 0.15em;
                 text-transform: uppercase;
-                color: var(--primary-light);
-                font-weight: 600;
+                color: #ffffff;
+                font-weight: 700;
             }
             .nav-drawer-close {
-                background: transparent;
-                border: none;
-                color: var(--text-muted);
-                font-size: 1.8rem;
+                width: 38px;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                color: #ffffff;
+                font-size: 1.5rem;
                 cursor: pointer;
                 line-height: 1;
-                padding: 0.2rem 0.5rem;
-                transition: color 0.2s;
+                transition: all 0.2s;
             }
             .nav-drawer-close:hover {
-                color: var(--text-main);
+                background: rgba(239, 68, 68, 0.25);
+                border-color: #ef4444;
+                color: #ef4444;
             }
             nav a:not(.nav-cart) {
                 display: block;
-                font-size: 1.1rem;
-                padding: 0.6rem 0;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                font-size: 1.15rem;
+                font-weight: 600;
+                letter-spacing: 0.03em;
+                padding: 0.85rem 1.1rem;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                color: #ffffff !important;
+                transition: all 0.25s ease;
+            }
+            nav a:not(.nav-cart):hover {
+                background: rgba(124, 58, 237, 0.25);
+                border-color: rgba(168, 85, 247, 0.5);
+                color: #ffffff !important;
+                transform: translateX(4px);
             }
             nav a::after {
                 display: none;
@@ -364,18 +383,58 @@
             .nav-cart {
                 width: 100%;
                 justify-content: center;
-                margin-top: 0.5rem;
-                padding: 0.8rem 1.5rem;
+                margin-top: 1rem;
+                padding: 0.95rem 1.5rem;
+                background: linear-gradient(135deg, #7c3aed, #ec4899) !important;
+                border: 1px solid rgba(255, 255, 255, 0.25) !important;
+                color: #ffffff !important;
+                font-weight: 700;
+                font-size: 1rem;
+                box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+            }
+            .nav-cart:hover {
+                filter: brightness(1.1);
+            }
+            .cart-badge {
+                background: #ffffff !important;
+                color: #7c3aed !important;
+                font-weight: 800;
             }
             .user-welcome {
-                padding: 0.5rem 0;
-                font-size: 0.85rem;
+                display: block;
+                padding: 0.85rem 1.1rem;
+                font-size: 0.9rem;
+                background: rgba(124, 58, 237, 0.12);
+                border: 1px solid rgba(124, 58, 237, 0.3);
+                border-radius: 12px;
+                color: #e2e8f0;
+                margin: 0.25rem 0;
+            }
+            .user-welcome span {
+                color: #38bdf8;
+                font-weight: 700;
+            }
+            #logout-form {
+                display: block;
+                width: 100%;
             }
             #logout-form button {
-                font-size: 1.1rem;
-                padding: 0.6rem 0;
+                display: block;
                 width: 100%;
+                font-size: 1rem;
+                font-weight: 600;
+                padding: 0.85rem 1.1rem;
+                border-radius: 12px;
+                background: rgba(239, 68, 68, 0.12);
+                border: 1px solid rgba(239, 68, 68, 0.3);
+                color: #fca5a5 !important;
                 text-align: left;
+                cursor: pointer;
+                transition: all 0.25s ease;
+            }
+            #logout-form button:hover {
+                background: rgba(239, 68, 68, 0.25);
+                color: #ffffff !important;
             }
             /* Backdrop */
             .nav-backdrop {
