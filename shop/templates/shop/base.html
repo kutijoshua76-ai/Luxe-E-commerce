@@ -113,6 +113,10 @@
             text-transform: uppercase; transition: color 0.3s ease;
             position: relative;
         }
+        /* Strong override for mobile drawer – must sit OUTSIDE media query to beat global specificity */
+        #main-nav.active a:not(.nav-cart) {
+            color: #ffffff !important;
+        }
         nav a::after {
             content: ''; position: absolute; bottom: -4px; left: 0;
             width: 0; height: 1px;
@@ -359,23 +363,27 @@
                 border-color: #ef4444;
                 color: #ef4444;
             }
-            nav a:not(.nav-cart) {
+            nav a:not(.nav-cart),
+            #main-nav a:not(.nav-cart) {
                 display: block;
-                font-size: 1.15rem;
-                font-weight: 600;
-                letter-spacing: 0.03em;
-                padding: 0.85rem 1.1rem;
-                border-radius: 12px;
-                background: rgba(255, 255, 255, 0.04);
-                border: 1px solid rgba(255, 255, 255, 0.08);
+                font-size: 1.2rem;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                padding: 1rem 1.25rem;
+                border-radius: 14px;
+                background: rgba(255, 255, 255, 0.10) !important;
+                border: 1px solid rgba(255, 255, 255, 0.18) !important;
                 color: #ffffff !important;
+                text-shadow: 0 1px 4px rgba(0,0,0,0.5);
                 transition: all 0.25s ease;
             }
-            nav a:not(.nav-cart):hover {
-                background: rgba(124, 58, 237, 0.25);
-                border-color: rgba(168, 85, 247, 0.5);
+            nav a:not(.nav-cart):hover,
+            #main-nav a:not(.nav-cart):hover {
+                background: rgba(124, 58, 237, 0.35) !important;
+                border-color: rgba(168, 85, 247, 0.7) !important;
                 color: #ffffff !important;
-                transform: translateX(4px);
+                transform: translateX(6px);
+                box-shadow: 0 0 16px rgba(124, 58, 237, 0.3);
             }
             nav a::after {
                 display: none;
