@@ -1,0 +1,21 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Static files collected
+staticfiles/
+
+# IDE & Logs
+.vscode/
+*.log
+scratch/
+
+# OS files
+.DS_Store
+Thumbs.db

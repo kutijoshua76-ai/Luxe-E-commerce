@@ -1,0 +1,335 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .shop-container {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 3rem;
+        align-items: flex-start;
+    }
+
+    .shop-sidebar {
+        position: sticky;
+        top: 100px;
+    }
+
+    .filter-card {
+        padding: 2rem;
+    }
+
+    .filter-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-main);
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .filter-item {
+        margin-bottom: 0.8rem;
+    }
+
+    .filter-item a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: all 0.3s;
+        font-size: 1rem;
+    }
+
+    .filter-item.active a, .filter-item a:hover {
+        color: var(--primary-light);
+        padding-left: 5px;
+    }
+
+    .price-inputs {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .price-inputs input {
+        width: 100%;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        color: var(--text-main);
+        font-size: 0.9rem;
+        outline: none;
+    }
+
+    .price-inputs span {
+        color: var(--text-muted);
+    }
+
+    .search-info {
+        margin-bottom: 3rem;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .product-card {
+        background: var(--glass-bg);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-category {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+    }
+
+    .product-title a {
+        color: var(--text-main);
+        text-decoration: none;
+    }
+
+    .product-price {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #818cf8;
+    }
+
+    .no-products {
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+
+    @media (max-width: 1024px) {
+        .shop-container {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .shop-sidebar {
+            position: static;
+        }
+    }
+
+    .mobile-filter-toggle-wrap {
+        display: none;
+        margin-bottom: 1.25rem;
+    }
+
+    .mobile-filter-btn {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+        .mobile-filter-toggle-wrap {
+            display: block;
+        }
+        .shop-sidebar {
+            display: none;
+            margin-bottom: 1.5rem;
+        }
+        .shop-sidebar.open {
+            display: block;
+            animation: fadeUp 0.3s ease;
+        }
+        .filter-card {
+            padding: 1.5rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        .product-card {
+            border-radius: 14px;
+        }
+        .product-image {
+            height: 160px;
+        }
+        .product-info {
+            padding: 0.85rem;
+        }
+        .product-category {
+            font-size: 0.7rem;
+            margin-bottom: 0.3rem;
+        }
+        .product-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+        .product-price {
+            font-size: 1.1rem;
+        }
+        .search-info {
+            margin-bottom: 1.5rem;
+        }
+        .search-title {
+            font-size: 1.5rem;
+        }
+        .no-products-card {
+            padding: 2.5rem 1.5rem;
+        }
+    }
+
+    .filter-card h3:not(:first-child) { margin-top: 2.5rem; }
+    .apply-filter-btn { width: 100%; margin-top: 1rem; padding: 0.6rem; }
+    .search-title { font-size: 2rem; }
+    .no-products-card { padding: 4rem; }
+    .no-products-icon { font-size: 4rem; display: block; margin-bottom: 1rem; }
+    .no-products-title { color: var(--text-main); margin-bottom: 1rem; }
+    .no-products-text { color: var(--text-muted); }
+    .clear-filters-btn { margin-top: 2rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="shop-container">
+    <!-- ─── Mobile Filter Toggle Button ─── -->
+    <div class="mobile-filter-toggle-wrap">
+        <button type="button" class="mobile-filter-btn" id="mobile-filter-toggle">
+            <span>⚡ Filters &amp; Categories {% if category %}({{ category.name }}){% endif %}</span>
+            <span class="filter-toggle-arrow">▼</span>
+        </button>
+    </div>
+
+    <!-- ─── Sidebar Filters ─── -->
+    <aside class="shop-sidebar">
+        <div class="glass-card filter-card">
+            <h3 class="filter-title">Categories</h3>
+            <div class="filter-list">
+                <div class="filter-item {% if not category %}active{% endif %}">
+                    <a href="{% url 'shop:product_list' %}">All Collections</a>
+                </div>
+                {% for c in categories %}
+                <div class="filter-item {% if category.slug == c.slug %}active{% endif %}">
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h3 class="filter-title">Price Range</h3>
+            <form method="get" class="price-filter-form">
+                {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}">{% endif %}
+                <div class="price-inputs">
+                    <input type="number" name="min_price" placeholder="Min" value="{{ request.GET.min_price }}">
+                    <span>—</span>
+                    <input type="number" name="max_price" placeholder="Max" value="{{ request.GET.max_price }}">
+                </div>
+                <button type="submit" class="btn btn-outline apply-filter-btn">Apply Filter</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- ─── Main Content ─── -->
+    <main class="shop-main">
+        {% if query %}
+        <div class="search-info">
+            <span class="section-label">Results for</span>
+            <h2 class="section-title search-title">"{{ query }}"</h2>
+        </div>
+        {% elif category %}
+        <div class="search-info">
+            <span class="section-label">Collection</span>
+            <h2 class="section-title search-title">{{ category.name }}</h2>
+        </div>
+        {% endif %}
+
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}" class="product-image">
+                    </a>
+                    <div class="product-info">
+                        <div class="product-category">{{ product.category.name }}</div>
+                        <h3 class="product-title">
+                            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                        </h3>
+                        <div class="product-price">${{ product.price }}</div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="no-products">
+                    <div class="glass-card no-products-card">
+                        <span class="no-products-icon">🔍</span>
+                        <h2 class="no-products-title">No products found</h2>
+                        <p class="no-products-text">Try adjusting your search or filters to find what you're looking for.</p>
+                        <a href="{% url 'shop:product_list' %}" class="btn btn-primary clear-filters-btn">Clear All Filters</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+
+<script>
+    const filterToggle = document.getElementById('mobile-filter-toggle');
+    const sidebar = document.querySelector('.shop-sidebar');
+    if (filterToggle && sidebar) {
+        filterToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            const arrow = filterToggle.querySelector('.filter-toggle-arrow');
+            if (arrow) {
+                arrow.textContent = sidebar.classList.contains('open') ? '▲' : '▼';
+            }
+        });
+    }
+</script>
+{% endblock %}

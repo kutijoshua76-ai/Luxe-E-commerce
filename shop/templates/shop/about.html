@@ -1,0 +1,67 @@
+{% extends "shop/base.html" %}
+
+{% block title %}About Us | LUXÉ{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-card { max-width: 900px; margin: 0 auto; }
+    .about-intro { margin-top: 2rem; line-height: 1.8; color: var(--text-muted); font-size: 1.1rem; }
+    .about-intro p { margin-bottom: 1.5rem; }
+    .values-title { color: var(--text-main); margin: 3rem 0 1rem; font-family: 'Cormorant Garamond', serif; font-size: 2rem; }
+    .values-list { list-style: none; padding: 0; }
+    .value-item { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; }
+    .value-icon { position: absolute; left: 0; }
+    .value-icon.primary { color: var(--primary); }
+    .value-icon.secondary { color: var(--secondary); }
+    .value-icon.accent { color: var(--accent); }
+    .about-cta { margin-top: 4rem; text-align: center; }
+    .about-help { margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+    .about-help a { color: var(--primary-light); text-decoration: none; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-content animate-fade-up">
+    <div class="glass-card about-card">
+        <span class="section-label">Our Story</span>
+        <h1 class="section-title">Redefining <span class="gradient-text">Premium Commerce</span></h1>
+        
+        <div class="about-intro">
+            <p>
+                Founded in 2026, <strong>LUXÉ</strong> was born from a simple belief: that online shopping shouldn't just be transactional; it should be an experience. We curate the finest fashion, cutting-edge electronics, and essential lifestyle products for individuals who refuse to settle for the ordinary.
+            </p>
+            
+            <p>
+                Our team travels the globe (virtually and physically) to partner with elite brands and independent artisans. Every product you see in our store has been meticulously vetted for quality, aesthetic appeal, and durability. 
+            </p>
+            
+            <p>
+                We are more than just an e-commerce platform. We are a community of tastemakers. Welcome to the new standard of premium lifestyle commerce. 
+            </p>
+            
+            <h3 class="values-title">Our Values</h3>
+            <ul class="values-list">
+                <li class="value-item">
+                    <span class="value-icon primary">✦</span>
+                    <strong>Uncompromising Quality:</strong> We only stock products we would use ourselves.
+                </li>
+                <li class="value-item">
+                    <span class="value-icon secondary">✦</span>
+                    <strong>Aesthetic Excellence:</strong> Design matters. We believe beauty and function should always coexist.
+                </li>
+                <li class="value-item">
+                    <span class="value-icon accent">✦</span>
+                    <strong>Customer First:</strong> Your satisfaction is the metric by which we measure our success.
+                </li>
+            </ul>
+        </div>
+        
+        <div class="about-cta">
+            <a href="{% url 'shop:product_list' %}" class="btn btn-primary">Explore Our Collection</a>
+            <div class="about-help">
+                Need help? <a href="https://wa.me/2349048667567" target="_blank" rel="noopener">Message us on WhatsApp</a> or <a href="tel:+2349048667567">Call Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

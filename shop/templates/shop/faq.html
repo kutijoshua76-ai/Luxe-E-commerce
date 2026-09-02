@@ -1,0 +1,80 @@
+{% extends "shop/base.html" %}
+
+{% block title %}FAQ | LUXÉ{% endblock %}
+
+{% block extra_css %}
+<style>
+    .faq-card { max-width: 900px; margin: 0 auto; }
+    .faq-container { margin-top: 3rem; }
+    .faq-item {
+        border-bottom: 1px solid var(--glass-border);
+        padding: 1.5rem 0;
+    }
+    .faq-item:last-child {
+        border-bottom: none;
+    }
+    .faq-question {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--text-main);
+        margin-bottom: 0.8rem;
+    }
+    .faq-answer {
+        font-size: 1rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+    }
+    .faq-footer {
+        margin-top: 4rem; 
+        text-align: center; 
+        padding-top: 2rem; 
+        border-top: 1px solid var(--glass-border);
+    }
+    .faq-footer p {
+        color: var(--text-muted); 
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-content animate-fade-up">
+    <div class="glass-card faq-card">
+        <span class="section-label">Support</span>
+        <h1 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h1>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3 class="faq-question">How long does shipping take?</h3>
+                <p class="faq-answer">Standard shipping typically takes 3-5 business days within the continental US. International shipping can take between 7-14 business days depending on customs processing.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3 class="faq-question">What is your return policy?</h3>
+                <p class="faq-answer">We offer a 30-day return window for all unused items in their original packaging. Simply contact our support team to initiate a return, and we will provide a prepaid shipping label.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3 class="faq-question">Are the luxury items authentic?</h3>
+                <p class="faq-answer">Absolutely. We source all our premium and luxury items directly from the brands or authorized, certified distributors. Every item is guaranteed 100% authentic.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3 class="faq-question">Do you offer international shipping?</h3>
+                <p class="faq-answer">Yes, we ship globally to over 150 countries. Shipping rates and delivery times are calculated at checkout based on your location.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3 class="faq-question">How can I track my order?</h3>
+                <p class="faq-answer">Once your order is dispatched, you will receive an email containing your tracking number and a link to monitor your shipment's progress in real-time.</p>
+            </div>
+        </div>
+        
+        <div class="faq-footer">
+            <p>Still have questions?</p>
+            <a href="https://wa.me/2349048667567" target="_blank" rel="noopener" class="btn btn-outline">Contact Support</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

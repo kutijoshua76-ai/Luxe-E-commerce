@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Logged Out — LUXÉ{% endblock %}
+
+{% block content %}
+<div class="page-content animate-fade-up">
+    <div class="auth-container">
+        <div class="glass-card">
+            <div class="auth-header">
+                <span class="section-label">Session Ended</span>
+                <h1 class="section-title">Logged <span class="gradient-text">Out</span></h1>
+                <p>You have been successfully logged out. Thank you for visiting LUXÉ.</p>
+            </div>
+
+            <div class="auth-footer">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-full">Sign In Again</a>
+                <p class="mt-4">
+                    <a href="{% url 'shop:home' %}" class="form-help">Return to Homepage</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

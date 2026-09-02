@@ -1,0 +1,53 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Register — LUXÉ{% endblock %}
+
+{% block content %}
+<div class="page-content animate-fade-up">
+    <div class="auth-container">
+        <div class="glass-card">
+            <div class="auth-header">
+                <span class="section-label">Join the Elite</span>
+                <h1 class="section-title">Create <span class="gradient-text">Account</span></h1>
+                <p>Join LUXÉ for a premium shopping experience.</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="form-label">
+                            {{ field.label }}
+                        </label>
+                        <input type="{{ field.field.widget.input_type|default:'text' }}" 
+                               name="{{ field.name }}" 
+                               id="{{ field.id_for_label }}"
+                               {% if field.field.required %}required{% endif %}
+                               class="form-input"
+                               placeholder="{{ field.label }}"
+                               title="{{ field.label }}">
+                        
+                        {% if field.help_text %}
+                            <p class="form-help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                        
+                        {% for error in field.errors %}
+                            <p class="form-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary btn-full mt-4">Register</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>
+                    Already have an account? 
+                    <a href="{% url 'login' %}">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

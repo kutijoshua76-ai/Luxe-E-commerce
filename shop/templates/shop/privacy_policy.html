@@ -1,0 +1,75 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Privacy Policy | LUXÉ{% endblock %}
+
+{% block extra_css %}
+<style>
+    .policy-card { max-width: 900px; margin: 0 auto; }
+    .policy-content { margin-top: 2rem; }
+    .policy-content h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.8rem;
+        color: var(--text-main);
+        margin: 2.5rem 0 1rem;
+        font-weight: 400;
+    }
+    .policy-content p {
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        font-size: 1.05rem;
+    }
+    .policy-content ul {
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        font-size: 1.05rem;
+    }
+    .policy-content li {
+        margin-bottom: 0.5rem;
+    }
+    .policy-contact-link { color: var(--primary-light); text-decoration: none; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-content animate-fade-up">
+    <div class="glass-card policy-card">
+        <span class="section-label">Legal</span>
+        <h1 class="section-title">Privacy <span class="gradient-text">Policy</span></h1>
+        
+        <div class="policy-content">
+            <p><em>Last Updated: May 2026</em></p>
+            
+            <p>At LUXÉ, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your data when you use our services.</p>
+
+            <h2>1. Information We Collect</h2>
+            <p>When you visit our website, place an order, or interact with us, we may collect the following types of information:</p>
+            <ul>
+                <li><strong>Personal Identification Information:</strong> Name, email address, shipping and billing address, and phone number.</li>
+                <li><strong>Payment Information:</strong> Credit card details and billing information (processed securely through our payment gateways).</li>
+                <li><strong>Usage Data:</strong> Information about how you navigate and interact with our site, including IP address, browser type, and device information.</li>
+            </ul>
+
+            <h2>2. How We Use Your Information</h2>
+            <p>The information we collect is used in the following ways:</p>
+            <ul>
+                <li>To process and fulfill your orders, including sending emails to confirm your order status and shipment.</li>
+                <li>To improve our website, product offerings, and customer service based on your feedback and browsing behavior.</li>
+                <li>To send periodic promotional emails about new products, special offers, or other information (you can opt-out at any time).</li>
+                <li>To detect, prevent, and address technical issues or fraudulent activities.</li>
+            </ul>
+
+            <h2>3. Information Sharing and Disclosure</h2>
+            <p>We do not sell, trade, or rent your personal identification information to others. We may share generic aggregated demographic information not linked to any personal identification information with our business partners and trusted affiliates. We may use third-party service providers to help us operate our business, such as sending out newsletters or processing payments, provided that those parties agree to keep this information confidential.</p>
+
+            <h2>4. Data Security</h2>
+            <p>We adopt industry-standard data collection, storage, and processing practices and security measures to protect against unauthorized access, alteration, disclosure, or destruction of your personal information, username, password, transaction information, and data stored on our Site.</p>
+
+            <h2>5. Your Rights</h2>
+            <p>You have the right to access, update, or delete the personal information we have on you. If you wish to exercise these rights or have any questions about this Privacy Policy, please contact our support team at <a href="https://wa.me/2349048667567" target="_blank" rel="noopener" class="policy-contact-link">WhatsApp</a> or call <a href="tel:+2349048667567" class="policy-contact-link">09048667567</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "shop/base.html" %}
+
+{% block extra_css %}
+<style>
+    .success-container { max-width: 600px; margin: 4rem auto; text-align: center; }
+    .success-icon { font-size: 5rem; color: #10b981; margin-bottom: 2rem; }
+    .success-title { margin-bottom: 1.5rem; }
+    .success-text { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-container glass-card">
+    <div class="success-icon">✓</div>
+    <h1 class="success-title">Thank You!</h1>
+    <p class="success-text">
+        Your order has been successfully placed. Your order number is <strong>#{{ order.id }}</strong>.
+    </p>
+    <a href="{% url 'shop:product_list' %}" class="btn btn-primary">Return to Shop</a>
+</div>
+{% endblock %}
