@@ -269,11 +269,19 @@
     .category-card:hover::before { transform: scale(1.08); opacity: 1; }
     .category-card:hover::after { opacity: 0.7; }
 
-    /* Specific Category Backgrounds */
-    .cat-fashion::before { background-image: url('{% static "images/cat_fashion.jpg" %}'); }
-    .cat-accessories::before { background-image: url('{% static "images/cat_accessories.jpg" %}'); }
-    .cat-lifestyle::before { background-image: url('{% static "images/cat_lifestyle.jpg" %}'); }
-    .cat-wellness::before { background-image: url('{% static "images/cat_lifestyle.jpg" %}'); } /* Fallback */
+    /* Specific Category Backgrounds with CDN Fallbacks */
+    .cat-fashion::before { 
+        background-image: url('{% static "images/cat_fashion.jpg" %}'), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop'); 
+    }
+    .cat-accessories::before { 
+        background-image: url('{% static "images/cat_accessories.jpg" %}'), url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop'); 
+    }
+    .cat-lifestyle::before { 
+        background-image: url('{% static "images/cat_lifestyle.jpg" %}'), url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=800&auto=format&fit=crop'); 
+    }
+    .cat-wellness::before { 
+        background-image: url('{% static "images/cat_lifestyle.jpg" %}'), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop'); 
+    }
 
     .category-icon {
         font-size: 2.2rem;
