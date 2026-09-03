@@ -150,6 +150,37 @@
         }
     }
 
+    .shop-nav-bar {
+        display: none;
+        grid-column: 1 / -1;
+        margin-bottom: 0.75rem;
+    }
+
+    .shop-back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.6rem 1.1rem;
+        border-radius: 12px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        transition: all 0.25s ease;
+        width: fit-content;
+    }
+
+    .shop-back-btn:hover, .shop-back-btn:active {
+        color: #ffffff;
+        background: rgba(124, 58, 237, 0.25);
+        border-color: var(--primary-light);
+        transform: translateX(-3px);
+    }
+
     .mobile-filter-toggle-wrap {
         display: none;
         margin-bottom: 1.25rem;
@@ -171,6 +202,10 @@
     }
 
     @media (max-width: 900px) {
+        .shop-nav-bar {
+            display: flex;
+            align-items: center;
+        }
         .mobile-filter-toggle-wrap {
             display: block;
         }
@@ -263,6 +298,17 @@
 
 {% block content %}
 <div class="shop-container">
+    <!-- ─── Back to Home Button ─── -->
+    <div class="shop-nav-bar">
+        <a href="{% url 'shop:home' %}" class="shop-back-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to Home</span>
+        </a>
+    </div>
+
     <!-- ─── Mobile Filter Toggle Button ─── -->
     <div class="mobile-filter-toggle-wrap">
         <button type="button" class="mobile-filter-btn" id="mobile-filter-toggle">
