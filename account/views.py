@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from .forms import UserRegistrationForm
 
 def register(request):
@@ -12,3 +12,7 @@ def register(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'account/register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('shop:home')

@@ -556,7 +556,7 @@
                     <button type="submit" class="btn-link">Sign Out</button>
                 </form>
             {% else %}
-                <a href="{% url 'login' %}">Sign In</a>
+                <a href="{% url 'logout' %}">Sign Out</a>
             {% endif %}
             <a href="{% url 'cart:cart_detail' %}" class="nav-cart">
                 🛍 Cart
