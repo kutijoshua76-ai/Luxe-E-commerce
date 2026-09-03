@@ -433,22 +433,28 @@
                 width: 100%;
             }
             #logout-form button {
-                display: block;
+                display: flex;
+                align-items: center;
                 width: 100%;
-                font-size: 1rem;
-                font-weight: 600;
-                padding: 0.85rem 1.1rem;
-                border-radius: 12px;
-                background: rgba(239, 68, 68, 0.12);
-                border: 1px solid rgba(239, 68, 68, 0.3);
+                font-size: 1.15rem;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                padding: 1.05rem 1.3rem;
+                border-radius: 14px;
+                background: rgba(239, 68, 68, 0.15) !important;
+                border: 1px solid rgba(239, 68, 68, 0.35) !important;
                 color: #fca5a5 !important;
-                text-align: left;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+                text-transform: uppercase;
                 cursor: pointer;
                 transition: all 0.25s ease;
             }
-            #logout-form button:hover {
-                background: rgba(239, 68, 68, 0.25);
+            #logout-form button:hover,
+            #logout-form button:active {
+                background: rgba(239, 68, 68, 0.3) !important;
+                border-color: rgba(239, 68, 68, 0.7) !important;
                 color: #ffffff !important;
+                transform: translateX(4px);
             }
             /* Backdrop */
             .nav-backdrop {
@@ -547,7 +553,7 @@
                 <span class="user-welcome">Hello, <span>{{ request.user.username }}</span></span>
                 <form id="logout-form" action="{% url 'logout' %}" method="post" class="inline-form">
                     {% csrf_token %}
-                    <button type="submit" class="btn-link">Logout</button>
+                    <button type="submit" class="btn-link">Sign Out</button>
                 </form>
             {% else %}
                 <a href="{% url 'login' %}">Sign In</a>
@@ -622,6 +628,19 @@
                 a.style.setProperty('font-weight', '700', 'important');
                 a.style.setProperty('text-shadow', '0 2px 4px rgba(0,0,0,0.9)', 'important');
             });
+            const logoutBtn = nav.querySelector('#logout-form button');
+            if (logoutBtn) {
+                logoutBtn.style.setProperty('color', '#fca5a5', 'important');
+                logoutBtn.style.setProperty('background', 'rgba(239, 68, 68, 0.15)', 'important');
+                logoutBtn.style.setProperty('border', '1px solid rgba(239, 68, 68, 0.35)', 'important');
+                logoutBtn.style.setProperty('border-radius', '14px', 'important');
+                logoutBtn.style.setProperty('padding', '1.05rem 1.3rem', 'important');
+                logoutBtn.style.setProperty('display', 'block', 'important');
+                logoutBtn.style.setProperty('width', '100%', 'important');
+                logoutBtn.style.setProperty('font-size', '1.15rem', 'important');
+                logoutBtn.style.setProperty('font-weight', '700', 'important');
+                logoutBtn.style.setProperty('text-shadow', '0 2px 4px rgba(0,0,0,0.9)', 'important');
+            }
         }
 
         function removeDrawerLinkStyles() {
@@ -636,6 +655,19 @@
                 a.style.removeProperty('font-weight');
                 a.style.removeProperty('text-shadow');
             });
+            const logoutBtn = nav.querySelector('#logout-form button');
+            if (logoutBtn) {
+                logoutBtn.style.removeProperty('color');
+                logoutBtn.style.removeProperty('background');
+                logoutBtn.style.removeProperty('border');
+                logoutBtn.style.removeProperty('border-radius');
+                logoutBtn.style.removeProperty('padding');
+                logoutBtn.style.removeProperty('display');
+                logoutBtn.style.removeProperty('width');
+                logoutBtn.style.removeProperty('font-size');
+                logoutBtn.style.removeProperty('font-weight');
+                logoutBtn.style.removeProperty('text-shadow');
+            }
         }
 
         function openNav() {
