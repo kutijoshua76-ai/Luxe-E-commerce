@@ -1,9 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="LUXÉ — Premium fashion and lifestyle ecommerce. Discover curated collections crafted for those who refuse the ordinary.">
+    <meta name="theme-color" content="#050816">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LUXÉ">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/static/images/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon.png">
     <title>{% block title %}LUXÉ — Premium Lifestyle Store{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -522,6 +531,80 @@
                 grid-column: auto;
             }
         }
+        /* ─── PWA Install Banner ─── */
+        #pwa-install-banner {
+            display: none;
+            position: fixed;
+            bottom: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(92vw, 420px);
+            background: linear-gradient(135deg, rgba(18, 23, 61, 0.97), rgba(10, 13, 36, 0.97));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 20px;
+            padding: 1rem 1.25rem;
+            z-index: 9999;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(124,58,237,0.2);
+            backdrop-filter: blur(20px);
+            animation: slideUpBanner 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        #pwa-install-banner.show {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        @keyframes slideUpBanner {
+            from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        .pwa-banner-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            flex-shrink: 0;
+            object-fit: cover;
+            box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+        }
+        .pwa-banner-text {
+            flex: 1;
+        }
+        .pwa-banner-text strong {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.1rem;
+        }
+        .pwa-banner-text span {
+            font-size: 0.78rem;
+            color: #94a3b8;
+        }
+        .pwa-install-btn {
+            padding: 0.55rem 1.1rem;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: filter 0.2s;
+            flex-shrink: 0;
+        }
+        .pwa-install-btn:hover { filter: brightness(1.15); }
+        .pwa-dismiss-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 1.3rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0.2rem;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+        .pwa-dismiss-btn:hover { color: #94a3b8; }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -558,6 +641,7 @@
             {% else %}
                 <a href="{% url 'logout' %}">Sign Out</a>
             {% endif %}
+            <a href="javascript:void(0)" id="pwa-drawer-install-btn" style="display:none;" onclick="triggerPWAInstall()">📲 Install App</a>
             <a href="{% url 'cart:cart_detail' %}" class="nav-cart">
                 🛍 Cart
                 {% with total_items=cart|length %}
@@ -739,6 +823,117 @@
                 window.history.back();
             } else {
                 window.location.href = "{% url 'shop:home' %}";
+            }
+        }
+    </script>
+
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner" role="dialog" aria-label="Install LUXÉ App">
+        <img src="{% static 'images/icon-192x192.png' %}" alt="LUXÉ App Icon" class="pwa-banner-icon">
+        <div class="pwa-banner-text">
+            <strong>Install LUXÉ App</strong>
+            <span id="pwa-banner-subtitle">Fast access, smooth shopping &amp; offline support</span>
+        </div>
+        <button type="button" class="pwa-install-btn" id="pwa-install-btn" onclick="triggerPWAInstall()">Install</button>
+        <button type="button" class="pwa-dismiss-btn" id="pwa-dismiss-btn" onclick="dismissPWABanner()" aria-label="Dismiss">&times;</button>
+    </div>
+
+    <!-- PWA Service Worker & Install Prompt Logic -->
+    <script>
+        let deferredPrompt = null;
+        const pwaBanner = document.getElementById('pwa-install-banner');
+        const drawerInstallBtn = document.getElementById('pwa-drawer-install-btn');
+
+        // 1. Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('LUXÉ PWA: ServiceWorker registered, scope:', reg.scope))
+                    .catch(err => console.warn('LUXÉ PWA: ServiceWorker registration failed:', err));
+            });
+        }
+
+        // Helper: Check if iOS
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+
+        // Helper: Check if already running in standalone mode
+        function isStandalone() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        // 2. Capture install prompt (Chrome, Edge, Android, Desktop)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Check if dismissed recently (7 days)
+            const dismissedAt = localStorage.getItem('pwa_dismissed_at');
+            const now = Date.now();
+            const sevenDays = 7 * 24 * 60 * 60 * 1000;
+            
+            if (!isStandalone() && (!dismissedAt || (now - parseInt(dismissedAt, 10)) > sevenDays)) {
+                setTimeout(() => {
+                    if (pwaBanner) pwaBanner.classList.add('show');
+                }, 2000);
+            }
+            if (drawerInstallBtn && !isStandalone()) {
+                drawerInstallBtn.style.display = 'block';
+                if (typeof applyDrawerLinkStyles === 'function') applyDrawerLinkStyles();
+            }
+        });
+
+        // 3. Trigger install prompt
+        function triggerPWAInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('LUXÉ PWA: Install accepted');
+                        if (pwaBanner) pwaBanner.classList.remove('show');
+                        if (drawerInstallBtn) drawerInstallBtn.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            } else if (isIOS()) {
+                alert("To install LUXÉ on iOS:\n\n1. Tap the Share button (square with arrow ↑)\n2. Scroll down and tap 'Add to Home Screen' (+)\n3. Tap 'Add'");
+            } else {
+                alert("To install LUXÉ:\nTap your browser menu (⋮) and select 'Install app' or 'Add to Home screen'.");
+            }
+        }
+
+        // 4. Dismiss banner
+        function dismissPWABanner() {
+            if (pwaBanner) pwaBanner.classList.remove('show');
+            localStorage.setItem('pwa_dismissed_at', Date.now().toString());
+        }
+
+        // 5. Hide once installed
+        window.addEventListener('appinstalled', () => {
+            console.log('LUXÉ PWA: App installed');
+            if (pwaBanner) pwaBanner.classList.remove('show');
+            if (drawerInstallBtn) drawerInstallBtn.style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        // iOS non-standalone guidance
+        if (isIOS() && !isStandalone()) {
+            const dismissedAt = localStorage.getItem('pwa_dismissed_at');
+            const now = Date.now();
+            const sevenDays = 7 * 24 * 60 * 60 * 1000;
+            if (!dismissedAt || (now - parseInt(dismissedAt, 10)) > sevenDays) {
+                setTimeout(() => {
+                    const subtitle = document.getElementById('pwa-banner-subtitle');
+                    if (subtitle) subtitle.textContent = 'Tap Share ↑ then "Add to Home Screen"';
+                    const installBtn = document.getElementById('pwa-install-btn');
+                    if (installBtn) installBtn.textContent = 'How to Install';
+                    if (pwaBanner) pwaBanner.classList.add('show');
+                }, 3000);
+            }
+            if (drawerInstallBtn) {
+                drawerInstallBtn.style.display = 'block';
+                if (typeof applyDrawerLinkStyles === 'function') applyDrawerLinkStyles();
             }
         }
     </script>

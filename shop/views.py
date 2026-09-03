@@ -1,6 +1,28 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import FileResponse, Http404
+from django.conf import settings
+import os
 from .models import Category, Product
 from cart.forms import CartAddProductForm
+
+def pwa_service_worker(request):
+    """Serve service worker from root scope for correct PWA coverage."""
+    sw_path = os.path.join(settings.BASE_DIR, 'shop', 'static', 'sw.js')
+    if not os.path.exists(sw_path):
+        raise Http404
+    response = FileResponse(open(sw_path, 'rb'), content_type='application/javascript')
+    response['Service-Worker-Allowed'] = '/'
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    return response
+
+def pwa_manifest(request):
+    """Serve web app manifest from root."""
+    manifest_path = os.path.join(settings.BASE_DIR, 'shop', 'static', 'manifest.json')
+    if not os.path.exists(manifest_path):
+        raise Http404
+    response = FileResponse(open(manifest_path, 'rb'), content_type='application/manifest+json')
+    response['Cache-Control'] = 'public, max-age=86400'
+    return response
 
 def home(request):
     categories = Category.objects.all()
