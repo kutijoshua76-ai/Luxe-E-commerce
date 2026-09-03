@@ -539,6 +539,8 @@
                     {% csrf_token %}
                     <button type="submit" class="btn-link">Logout</button>
                 </form>
+            {% else %}
+                <a href="{% url 'login' %}">Sign In</a>
             {% endif %}
             <a href="{% url 'cart:cart_detail' %}" class="nav-cart">
                 🛍 Cart

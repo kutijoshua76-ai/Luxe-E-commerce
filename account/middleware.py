@@ -11,14 +11,20 @@ class LoginRequiredMiddleware:
             path = request.path
             
             # Define allowed paths
-            exempt_urls = [
+            exempt_prefixes = [
                 reverse('login'),
                 reverse('register'),
                 '/account/logout/',
+                '/',
+                '/shop/',
+                '/about/',
+                '/faq/',
+                '/privacy-policy/',
+                '/cart/',
             ]
             
             # Check if path is exempt or starts with admin/static/media
-            is_exempt = any(path == url or path == url.rstrip('/') for url in exempt_urls)
+            is_exempt = any(path.startswith(prefix) for prefix in exempt_prefixes)
             is_admin = path.startswith('/admin/')
             is_static = path.startswith(settings.STATIC_URL)
             is_media = path.startswith(settings.MEDIA_URL)
