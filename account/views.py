@@ -15,4 +15,5 @@ def register(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('shop:home')
+    request.session.flush()
+    return redirect('login')
