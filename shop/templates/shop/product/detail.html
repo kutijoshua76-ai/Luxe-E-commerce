@@ -133,11 +133,31 @@
             padding: 1rem;
         }
     }
+
+    .detail-back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .detail-back-link:hover {
+        color: var(--text-main);
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-content">
+<a href="javascript:handleMobileBack()" class="detail-back-link">
+    ← Back
+</a>
 <div class="product-detail-container">
     <div class="detail-image-container">
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}" class="detail-image">
