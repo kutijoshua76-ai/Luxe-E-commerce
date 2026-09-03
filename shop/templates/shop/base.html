@@ -574,6 +574,8 @@
         {% block content %}{% endblock %}
     </main>
 
+    {% block footer %}
+    {% if not '/account/' in request.path %}
     <footer>
         <div class="footer-inner">
             <div class="footer-brand">
@@ -608,6 +610,8 @@
             <span>Crafted with passion &amp; precision.</span>
         </div>
     </footer>
+    {% endif %}
+    {% endblock %}
     <script>
         const toggle = document.getElementById('mobile-toggle');
         const nav = document.getElementById('main-nav');
