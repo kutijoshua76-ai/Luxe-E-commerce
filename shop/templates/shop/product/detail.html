@@ -138,6 +138,9 @@
 
 {% block content %}
 <div class="page-content">
+<a href="javascript:handleMobileBack()" class="btn-link" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--text-muted);">
+    ← Back
+</a>
 <div class="product-detail-container">
     <div class="detail-image-container">
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}" class="detail-image">
