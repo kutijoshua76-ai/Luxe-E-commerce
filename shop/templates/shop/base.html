@@ -63,6 +63,14 @@
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid var(--glass-border);
+            transition: z-index 0.1s ease;
+        }
+        header.nav-open {
+            z-index: 1250 !important;
+        }
+        header.nav-open .mobile-toggle {
+            opacity: 0 !important;
+            pointer-events: none !important;
         }
         .nav-logo {
             font-family: 'Cormorant Garamond', serif;
@@ -307,19 +315,19 @@
                 right: -100%;
                 width: min(85vw, 360px);
                 height: 100vh;
-                background: linear-gradient(180deg, #101535 0%, #080b1e 100%);
-                -webkit-backdrop-filter: blur(25px);
-                backdrop-filter: blur(25px);
+                background: linear-gradient(180deg, #12173d 0%, #0a0d24 100%) !important;
+                -webkit-backdrop-filter: blur(30px);
+                backdrop-filter: blur(30px);
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: stretch;
                 gap: 0.75rem;
                 padding: 1.75rem 1.5rem 2.5rem;
                 transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-                border-left: 1px solid rgba(168, 85, 247, 0.3);
-                z-index: 1200;
+                border-left: 1px solid rgba(168, 85, 247, 0.4);
+                z-index: 1260 !important;
                 overflow-y: auto;
-                box-shadow: -15px 0 45px rgba(0, 0, 0, 0.85);
+                box-shadow: -20px 0 60px rgba(0, 0, 0, 0.95);
             }
             nav.active {
                 right: 0;
@@ -362,24 +370,26 @@
             nav a:not(.nav-cart),
             #main-nav a:not(.nav-cart) {
                 display: block;
-                font-size: 1.2rem;
+                font-size: 1.15rem;
                 font-weight: 700;
-                letter-spacing: 0.04em;
-                padding: 1rem 1.25rem;
+                letter-spacing: 0.05em;
+                padding: 1.05rem 1.3rem;
                 border-radius: 14px;
-                background: rgba(255, 255, 255, 0.10) !important;
-                border: 1px solid rgba(255, 255, 255, 0.18) !important;
+                background: rgba(255, 255, 255, 0.12) !important;
+                border: 1px solid rgba(255, 255, 255, 0.22) !important;
                 color: #ffffff !important;
-                text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
                 transition: all 0.25s ease;
             }
             nav a:not(.nav-cart):hover,
-            #main-nav a:not(.nav-cart):hover {
-                background: rgba(124, 58, 237, 0.35) !important;
+            #main-nav a:not(.nav-cart):hover,
+            nav a:not(.nav-cart):active,
+            #main-nav a:not(.nav-cart):active {
+                background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(236, 72, 153, 0.35)) !important;
                 border-color: rgba(168, 85, 247, 0.7) !important;
                 color: #ffffff !important;
-                transform: translateX(6px);
-                box-shadow: 0 0 16px rgba(124, 58, 237, 0.3);
+                transform: translateX(4px);
+                box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
             }
             nav a::after {
                 display: none;
@@ -597,19 +607,20 @@
         const nav = document.getElementById('main-nav');
         const backdrop = document.getElementById('nav-backdrop');
         const closeBtn = document.getElementById('nav-drawer-close');
+        const siteHeader = document.getElementById('site-header');
 
         // Drawer link style helper – inline styles beat ALL CSS rules
         function applyDrawerLinkStyles() {
             nav.querySelectorAll('a:not(.nav-cart)').forEach(function(a) {
                 a.style.setProperty('color', '#ffffff', 'important');
-                a.style.setProperty('background', 'rgba(255,255,255,0.10)', 'important');
-                a.style.setProperty('border', '1px solid rgba(255,255,255,0.20)', 'important');
-                a.style.setProperty('border-radius', '12px', 'important');
-                a.style.setProperty('padding', '0.9rem 1.2rem', 'important');
+                a.style.setProperty('background', 'rgba(255,255,255,0.12)', 'important');
+                a.style.setProperty('border', '1px solid rgba(255,255,255,0.22)', 'important');
+                a.style.setProperty('border-radius', '14px', 'important');
+                a.style.setProperty('padding', '1.05rem 1.3rem', 'important');
                 a.style.setProperty('display', 'block', 'important');
                 a.style.setProperty('font-size', '1.15rem', 'important');
                 a.style.setProperty('font-weight', '700', 'important');
-                a.style.setProperty('text-shadow', '0 1px 6px rgba(0,0,0,0.6)', 'important');
+                a.style.setProperty('text-shadow', '0 2px 4px rgba(0,0,0,0.9)', 'important');
             });
         }
 
@@ -630,6 +641,7 @@
         function openNav() {
             toggle.classList.add('active');
             nav.classList.add('active');
+            if (siteHeader) siteHeader.classList.add('nav-open');
             if (backdrop) backdrop.classList.add('active');
             document.body.style.overflow = 'hidden';
             applyDrawerLinkStyles();
@@ -638,6 +650,7 @@
         function closeNav() {
             toggle.classList.remove('active');
             nav.classList.remove('active');
+            if (siteHeader) siteHeader.classList.remove('nav-open');
             if (backdrop) backdrop.classList.remove('active');
             document.body.style.overflow = 'auto';
             removeDrawerLinkStyles();
