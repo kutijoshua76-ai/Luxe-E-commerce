@@ -106,6 +106,14 @@
         .detail-image-container {
             border-radius: 20px;
         }
+        /* Fix add-to-cart alignment on mid mobile */
+        .add-to-cart-form {
+            flex-wrap: wrap;
+        }
+        .add-to-cart-form select {
+            flex: 1;
+            min-width: 100px;
+        }
     }
 
     @media (max-width: 540px) {
@@ -129,6 +137,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="page-content">
 <div class="product-detail-container">
     <div class="detail-image-container">
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}" class="detail-image">
@@ -150,5 +159,6 @@
             <button type="submit" class="btn btn-primary">Add to Shopping Cart</button>
         </form>
     </div>
+</div>
 </div>
 {% endblock %}

@@ -153,6 +153,7 @@
     .mobile-filter-toggle-wrap {
         display: none;
         margin-bottom: 1.25rem;
+        grid-column: 1 / -1; /* Span full width when inside grid */
     }
 
     .mobile-filter-btn {
@@ -225,6 +226,27 @@
         }
         .no-products-card {
             padding: 2.5rem 1.5rem;
+        }
+        /* Price filter wraps on small screens */
+        .price-inputs {
+            flex-wrap: wrap;
+        }
+        .price-inputs input {
+            min-width: 80px;
+            font-size: 16px; /* Prevent iOS zoom */
+        }
+    }
+
+    @media (max-width: 380px) {
+        /* Single column on very narrow screens */
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+        .product-image {
+            height: 200px;
+        }
+        .product-title {
+            font-size: 1rem;
         }
     }
 

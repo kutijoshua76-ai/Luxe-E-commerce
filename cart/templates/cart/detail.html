@@ -158,6 +158,7 @@
             margin-bottom: 0.75rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding-bottom: 0.75rem;
+            display: block; /* Product cell: block layout, not label+value flex */
         }
         .cart-item-info {
             gap: 1rem;
@@ -179,6 +180,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
+            flex-shrink: 0;
         }
         .cart-table td:first-child::before {
             display: none;
@@ -206,6 +208,12 @@
     /* New classes for inline styles */
     .cart-header { margin-bottom: 2rem; }
     .cart-item-info { display: flex; align-items: center; gap: 1.5rem; }
+    .cart-item-title {
+        min-width: 0; /* Allow title to shrink and not overflow flex container */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .remove-btn { background: none; border: none; cursor: pointer; }
     .empty-cart { text-align: center; padding: 3rem; }
     .empty-cart-text { font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-muted); }
@@ -213,6 +221,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="page-content">
 <div class="cart-container">
     <h1 class="cart-header">Your Shopping Cart</h1>
     
@@ -278,5 +287,6 @@
             </div>
         {% endif %}
     </div>
+</div>
 </div>
 {% endblock %}
